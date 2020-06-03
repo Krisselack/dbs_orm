@@ -12,3 +12,4 @@ class Customertable:
     territory = Column('territory',String(20))
     contactlastname = Column('contactlastname', String(20))
     contactfirstname = Column('contactfirstname', String(20))
+    centertable = relationship('Centertable')

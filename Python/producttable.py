@@ -1,7 +1,6 @@
 class Producttable:
     __tablename__='producttable'
-    on_id = Column('on_id', String(32), primary_key=True)
-    orderdate = Column('orderdate',datetime)
-    qtr_id = Column('qtr_id',int)
-    month_id = Column('month_id',int)
-    year_id = Column('year_id',int)
+    pr_id = Column('pr_id', String(5), primary_key=True)
+    msrp = Column('msrp',int)
+    productline = Column('productline',String(20))
+    productcode = Column('productcode',String(20))

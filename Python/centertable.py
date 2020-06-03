@@ -15,6 +15,7 @@ class Centertable:
     sales = Column('sales', int)
     status = Column('status', str)
     dealsize = Column('dealsize', str)
+
     ordertimes = relationship('Ordertimes', uselist=False, back_populates='ordertimes')
     cu_id = Column(String(5), ForeignKey('customertable.cu_id'))
     producttable = relationship("Producttable", secondary=center_product_association)

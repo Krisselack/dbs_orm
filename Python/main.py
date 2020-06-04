@@ -5,7 +5,9 @@ from sqlalchemy.orm import sessionmaker
 
 # import classes
 from Python.centertable import Centertable
-# from Python.customertable import Customertable
+from Python.customertable import Customertable
+from Python.ordertimes import Ordertimes
+from Python.producttable import Producttable
 
 # create an engine
 engine = create_engine('postgresql://usr:pass@localhost:5432/postgres')

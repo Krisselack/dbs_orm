@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, String, Integer, ForeignKey, Date
+from sqlalchemy import Table, Column, String, Integer, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -9,8 +9,9 @@ center_product_association = Table('center_product',  Base.metadata,
     Column('pr_id', Integer, ForeignKey('producttable.pr_id'))
 )
 
+
 class Centertable:
-    __tablename__='centertable'
+    __tablename__ = 'centertable'
     pk = Column(Integer, primary_key=True)
     on_id = Column(Integer, ForeignKey('ordernumbertable.on_id'))
     pr_id = Column(Integer, ForeignKey('producttable.pr_id'))
@@ -22,11 +23,8 @@ class Centertable:
     sales = Column('sales', Integer)
     status = Column('status', String(50))
     dealsize = Column('dealsize', String(50))
-
     ordertimes = relationship('Ordertimes', uselist=False, back_populates='ordertimes')
-    cu_id = Column(String(5), ForeignKey('customertable.cu_id')) # NOCH EINMAL? 
     producttable = relationship("Producttable", secondary=center_product_association)
-
 
     def __init__(self, ordernumber, quantityorderd, priceeach,
                  orderlinenumber, sales, status, dealsize):

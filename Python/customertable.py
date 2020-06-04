@@ -1,3 +1,7 @@
+from sqlalchemy import Table, Column, String, Integer, ForeignKey, Date
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+
 class Customertable:
     __tablename__='customertable'
     cu_id = Column('cu_id', String(5),primary_key=True)
@@ -13,3 +17,17 @@ class Customertable:
     contactlastname = Column('contactlastname', String(20))
     contactfirstname = Column('contactfirstname', String(20))
     centertable = relationship('Centertable')
+
+    def __init__(self,customername,phone,addressline1,addressline2,city,state,postalcode,country,territory,contactlastname,contactfirstname,centertable):
+        self.customername = customername
+        self.phone = phone
+        self.addressline1 = addressline1
+        self.addressline2 = addressline2
+        self.city = city
+        self.state = state
+        self.postalcode = postalcode
+        self.country = country
+        self.territory = territory
+        self.contactlastname = contactlastname
+        self.contactfirstname = contactfirstname
+        self.centertable = centertable

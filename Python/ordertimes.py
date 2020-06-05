@@ -1,11 +1,10 @@
 from sqlalchemy import Column, String, Integer, DateTime  # ',Table, ForeignKey
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# import datetime
-# from datetime import datetime
 
+Base = declarative_base()
 
-class Ordertimes:
+class Ordertimes(Base):
     __tablename__ = 'ordertimes'
     on_id = Column('on_id', String(5), primary_key=True)
     orderdate = Column('orderdate', DateTime())

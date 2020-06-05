@@ -1,20 +1,28 @@
-
+from sqlalchemy import Table, Column, String, Integer, ForeignKey, Date
 # import packages
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 # import classes
-from Python.centertable import Centertable
-from Python.customertable import Customertable
-from Python.ordertimes import Ordertimes
-from Python.producttable import Producttable
+from centertable import Centertable
+from customertable import Customertable
+from ordertimes import Ordertimes
+from producttable import Producttable
 
 # create an engine
-engine = create_engine('postgresql://usr:pass@localhost:5432/postgres')
+# postgresql://username:password@host:port/db-name
+engine = create_engine('postgresql://postgres:Test@localhost:5432/postgres')
 
 # create a configured "Session" class
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(engine)
 
 # create a Session
 session = Session()
-session
+
+#just test below
+#get all data from Ordertimes in film and print month.id
+film = session.query(Ordertimes)
+for x in film:
+    print(x.month_id)
+

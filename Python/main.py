@@ -6,9 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # import classes
 from centertable import Centertable
-from customertable import Customertable
-from ordertimes import Ordertimes
-from producttable import Producttable
+from centertable import Customertable
+from centertable import Ordertimes
+from centertable import Producttable
 
 # create an engine
 # postgresql://username:password@host:port/db-name
@@ -24,5 +24,5 @@ session = Session()
 #get all data from Ordertimes in film and print month.id
 film = session.query(Ordertimes)
 for x in film:
-    print(x.month_id)
+    print(x)
 

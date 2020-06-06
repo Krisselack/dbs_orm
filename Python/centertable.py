@@ -40,12 +40,12 @@ class Ordertimes(Base):
     year_id = Column('year_id', Integer)
     centertable = relationship('Centertable', back_populates='ordertimes')
 
-    def __init__(self, orderdate, qtr_id, month_id, year_id, centertable):
+    def __init__(self, on_id, orderdate, qtr_id, month_id, year_id):
+        self.on_id = on_id
         self.orderdate = orderdate
         self.qtr_id = qtr_id
         self.month_id = month_id
         self.year_id = year_id
-        self.centertable = centertable
 
 class Producttable(Base):
     __tablename__ = 'producttable'
@@ -76,7 +76,7 @@ class Customertable(Base):
     contactfirstname = Column('contactfirstname', String(20))
     centertable = relationship("Centertable", back_populates='customertable')
 
-    def __init__(self,customername,phone,addressline1,addressline2,city,state,postalcode,country,territory,contactlastname,contactfirstname,centertable):
+    def __init__(self,customername,phone,addressline1,addressline2,city,state,postalcode,country,territory,contactlastname,contactfirstname):
         self.customername = customername
         self.phone = phone
         self.addressline1 = addressline1
@@ -88,4 +88,3 @@ class Customertable(Base):
         self.territory = territory
         self.contactlastname = contactlastname
         self.contactfirstname = contactfirstname
-        self.centertable = centertable

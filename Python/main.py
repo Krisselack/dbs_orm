@@ -1,28 +1,32 @@
-from sqlalchemy import Table, Column, String, Integer, ForeignKey, Date
-# import packages
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
-# import classes
+from dbConnection import Database as db
+import userinterface as ui
+from centertable import Ordertimes
 from centertable import Centertable
 from centertable import Customertable
-from centertable import Ordertimes
 from centertable import Producttable
+from sqlalchemy.orm import class_mapper
 
-# create an engine
-# postgresql://username:password@host:port/db-name
-engine = create_engine('postgresql://postgres:Test@localhost:5432/postgres')
+database = db('postgres','Test','localhost',5432,'postgres')
 
-# create a configured "Session" class
-Session = sessionmaker(engine)
+dic={
+    'Ordertimes': Ordertimes,
+    'Centertable':Centertable,
+    'Customertable':Customertable,
+    'Producttable':Producttable
+}
 
-# create a Session
-session = Session()
+while(True):
+    ui.printconsole('Welche Tabelle wollen sie abfragen:')
+    tabelle = ui.getinput()
 
-#just test below
-#get all data from Ordertimes in film and print month.id
-film = session.query(Ordertimes)
-for x in film:
-    print(x)
+    if (tabelle in dic):
+        output = database.get_table(dic[tabelle])
+        for x in output:
+            ui.printconsole(x)
+    else:
+        ui.printconsole('Tabelle gibt es nicht')
+    ui.printconsole('wollen sie beenden? x eingeben')
+    if ui.getinput() == 'x':
+        break
+
 

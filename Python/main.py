@@ -79,3 +79,25 @@ for x in mc_sales_in_USA:
 
 sum(ussales)
 
+
+# Ablauf für UseCase
+
+#1 Wollen sie Daten lesen
+
+    #Daten lesen
+    #Welche Tabellen möchten sie lesen?
+    #Tabellen abfragen
+    #soll Benutzer aufwändigere Queries absetzen können, wie wird das realisiert ohne jeden Parameter einzeln abzufragen?
+    
+    #Abgefragte daten ausgeben
+    #Format?
+    
+#oder Schreiben
+    #Welche Daten wollen sie schreiben?
+    #hier nötigen Parameter abfragen
+    #schreiben in DB
+    #validierung wegen einfachheit sparen?
+    #eventuell die Zeile abfragen um zu validieren, dass sie geschrieben wurde
+
+#oder Beenden
+    #Programm wird beendet

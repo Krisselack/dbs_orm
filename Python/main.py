@@ -51,7 +51,7 @@ sum(ussales)
 # Ablauf für UseCase
 while(True):
     #1 Wollen sie Daten lesen
-    ui.printconsole('Wollen sie Daten lesen [l], Daten schreiben [s] oder beenden [b]')
+    ui.printconsole('Wollen sie Daten lesen [l], Daten schreiben [s], Daten updaten [u] oder beenden [b]')
     userinput = ui.getinput()
 
     if userinput == 'l':
@@ -98,6 +98,17 @@ while(True):
         else:
             ui.printconsole('Diese Tabelle gibt es nicht.')
 
+    if userinput =='u':
+        customer = database.session.query(Customertable).get('CU1')
+        print('cu_id: ' + customer.cu_id + '| customername: ' + customer.customername)
+        ui.printconsole('customername char50')
+        newname = ui.getinput()
+        customer.customername = newname
+        database.session.commit()
+        database.session.refresh(customer)
+        database.session.commit(customer)
+        #customer = database.session.query(Customertable).get('CU1')
+        print('cu_id: ' + customer.cu_id + '| customername: ' + customer.customername)
     if userinput == 'b':
         break
         #Programm wird beendet

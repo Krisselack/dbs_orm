@@ -54,7 +54,8 @@ class Producttable(Base):
     productcode = Column('productcode', String(20))
     centertable = relationship('Centertable', back_populates='producttable')
 
-    def __init__(self, msrp, productline, productcode):
+    def __init__(self,pr_id, msrp, productline, productcode):
+        self.pr_id = pr_id
         self.msrp = msrp
         self.productline = productline
         self.productcode = productcode

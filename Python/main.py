@@ -111,12 +111,26 @@ while(True):
         table = ui.getinput()
         if table in dic:
             #oder Schreiben
-            pass
-            #Welche Daten wollen sie schreiben?
-            #hier nötigen Parameter abfragen
-            #schreiben in DB
-            #validierung wegen einfachheit sparen?
-            #eventuell die Zeile abfragen um zu validieren, dass sie geschrieben wurde
+            if table == 'Producttable':
+
+
+                #hier nötigen Parameter abfragen
+                ui.printconsole('ID char5')
+                id = ui.getinput()
+                ui.printconsole('msrp int')
+                msrp = ui.getinput()
+                ui.printconsole('productline char20')
+                productline = ui.getinput()
+                ui.printconsole('productcode char20')
+                productcode = ui.getinput()
+                #schreiben in DB
+                product = Producttable(pr_id=id, msrp=msrp, productline=productline, productcode=productcode)
+                database.create_object(product)
+                #validierung wegen einfachheit sparen?
+                #eventuell die Zeile abfragen um zu validieren, dass sie geschrieben wurde
+                test = database.session.query(Producttable).filter(Producttable.pr_id==id, Producttable.msrp==msrp, Producttable.productline==productline)
+                for x in test:
+                     print('pr_id: '+ x.pr_id +'| msrp: '+ str(x.msrp)+'| productline: ' + x.productline+'| productcode: ' + x.productcode)
         else:
             ui.printconsole('Diese Tabelle gibt es nicht.')
 

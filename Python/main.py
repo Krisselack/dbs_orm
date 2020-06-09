@@ -106,7 +106,6 @@ while(True):
         customer.customername = newname
         database.session.commit()
         database.session.refresh(customer)
-        database.session.commit(customer)
         #customer = database.session.query(Customertable).get('CU1')
         print('cu_id: ' + customer.cu_id + '| customername: ' + customer.customername)
     if userinput == 'b':

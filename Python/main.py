@@ -28,42 +28,9 @@ dic={'Ordertimes': Ordertimes,
     'Producttable':Producttable
 }
 
-# es sollten alle vom centertable zu den anderen 1:n sein 
-"""
-while(True):
-    ui.printconsole('Welche Tabelle wollen sie abfragen:')
-    tabelle = ui.getinput()
-
-    if (tabelle in dic):
-        output = database.get_table(dic[tabelle])
-        for x in output:
-            ui.printconsole(x)
-    else:
-        ui.printconsole('Tabelle gibt es nicht')
-    ui.printconsole('wollen sie beenden? x eingeben')
-    if ui.getinput() == 'x':
-        break
-"""
-
-#hier müsste man immer den primarykey manuell angeben, denke mit int als pk wäre es einfacher
-#hab zwar nicht genauer geschaut aber so nebenbei gelesen, dass es einen autoinc pk gibt
-#hier mit string immer den höchsten auslesen und manuell eins raufzählen geht zwar, ist aber denke ich nciht optimal
-
-# order = Ordertimes(on_id= 'test',orderdate='2020-10-10 00:00:00',qtr_id=10,month_id=10,year_id=2020)
-
-# database.create_object(order)
-
-# test = database.session.query(Ordertimes).filter(Ordertimes.year_id==2020) 
-# for x in test:
-#     print(x)
-
-
 
 # Möglicher Usecase:
 # sum sales of product and country -> country + product selector gui
-
-
-
 
 # Verwenden der API zur Daten Abfrage:
 # FILTER KANN MAN AUF Variable setzen
@@ -112,8 +79,6 @@ while(True):
         if table in dic:
             #oder Schreiben
             if table == 'Producttable':
-
-
                 #hier nötigen Parameter abfragen
                 ui.printconsole('ID char5')
                 id = ui.getinput()
@@ -126,8 +91,7 @@ while(True):
                 #schreiben in DB
                 product = Producttable(pr_id=id, msrp=msrp, productline=productline, productcode=productcode)
                 database.create_object(product)
-                #validierung wegen einfachheit sparen?
-                #eventuell die Zeile abfragen um zu validieren, dass sie geschrieben wurde
+                #die Zeile abfragen um zu validieren, dass sie geschrieben wurde
                 test = database.session.query(Producttable).filter(Producttable.pr_id==id, Producttable.msrp==msrp, Producttable.productline==productline)
                 for x in test:
                      print('pr_id: '+ x.pr_id +'| msrp: '+ str(x.msrp)+'| productline: ' + x.productline+'| productcode: ' + x.productcode)
@@ -136,5 +100,4 @@ while(True):
 
     if userinput == 'b':
         break
-        #oder Beenden
         #Programm wird beendet

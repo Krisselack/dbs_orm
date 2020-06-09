@@ -29,7 +29,7 @@ dic={'Ordertimes': Ordertimes,
 }
 
 # es sollten alle vom centertable zu den anderen 1:n sein 
-
+"""
 while(True):
     ui.printconsole('Welche Tabelle wollen sie abfragen:')
     tabelle = ui.getinput()
@@ -43,7 +43,7 @@ while(True):
     ui.printconsole('wollen sie beenden? x eingeben')
     if ui.getinput() == 'x':
         break
-
+"""
 
 #hier müsste man immer den primarykey manuell angeben, denke mit int als pk wäre es einfacher
 #hab zwar nicht genauer geschaut aber so nebenbei gelesen, dass es einen autoinc pk gibt
@@ -66,7 +66,8 @@ while(True):
 
 
 # Verwenden der API zur Daten Abfrage:
-# FILTER KANN MAN AUF Variable setzen 
+# FILTER KANN MAN AUF Variable setzen
+"""
 mc_sales_in_USA = database.session.query(Centertable) \
     .join(Customertable) \
     .join(Producttable) \ 
@@ -78,26 +79,48 @@ for x in mc_sales_in_USA:
     ussales.append(x.sales)
 
 sum(ussales)
-
+"""
 
 # Ablauf für UseCase
+while(True):
+    #1 Wollen sie Daten lesen
+    ui.printconsole('Wollen sie Daten lesen [l], Daten schreiben [s] oder beenden [b]')
+    userinput = ui.getinput()
 
-#1 Wollen sie Daten lesen
+    if userinput == 'l':
+        #Daten lesen
+        ui.printconsole('Welches Land möchten sie abfragen?')
+        countries = []
+        [countries.append(x[0]) for x in database.session.query(Customertable.country).distinct()]
+        print(countries)
+        country = ui.getinput()
 
-    #Daten lesen
-    #Welche Tabellen möchten sie lesen?
-    #Tabellen abfragen
-    #soll Benutzer aufwändigere Queries absetzen können, wie wird das realisiert ohne jeden Parameter einzeln abzufragen?
-    
-    #Abgefragte daten ausgeben
-    #Format?
-    
-#oder Schreiben
-    #Welche Daten wollen sie schreiben?
-    #hier nötigen Parameter abfragen
-    #schreiben in DB
-    #validierung wegen einfachheit sparen?
-    #eventuell die Zeile abfragen um zu validieren, dass sie geschrieben wurde
+        if country in countries:
+            countrysales = []
+            [countrysales.append(x.sales) for x in database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == country).all()]
+            # Abgefragte daten ausgeben
+            ui.printconsole(sum(countrysales))
 
-#oder Beenden
-    #Programm wird beendet
+        else:
+            ui.printconsole('Dieses Land gibt es nicht in der Tabelle')
+
+
+    if userinput == 's':
+        ui.printconsole('Welche Tabelle möchten sie schreiben?')
+        # Tabellen abfragen
+        table = ui.getinput()
+        if table in dic:
+            #oder Schreiben
+            pass
+            #Welche Daten wollen sie schreiben?
+            #hier nötigen Parameter abfragen
+            #schreiben in DB
+            #validierung wegen einfachheit sparen?
+            #eventuell die Zeile abfragen um zu validieren, dass sie geschrieben wurde
+        else:
+            ui.printconsole('Diese Tabelle gibt es nicht.')
+
+    if userinput == 'b':
+        break
+        #oder Beenden
+        #Programm wird beendet

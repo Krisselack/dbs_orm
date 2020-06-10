@@ -66,14 +66,14 @@ while(True):
             countrysales = []
             [countrysales.append(x.sales) for x in database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == country).all()]
             # Abgefragte daten ausgeben
-            ui.printconsole(sum(countrysales))
+            ui.printconsole("Im Land "+country+" betrugen sämtliche Sales: "+ str(sum(countrysales)))
 
         else:
             ui.printconsole('Dieses Land gibt es nicht in der Tabelle')
 
 
     if userinput == 's':
-        ui.printconsole('Welche Tabelle möchten sie schreiben?')
+        ui.printconsole('Welche Tabelle möchten sie schreiben (derzeit nur Producttable)?')
         # Tabellen abfragen
         table = ui.getinput()
         if table in dic:

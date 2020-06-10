@@ -39,8 +39,6 @@ dic={'Ordertimes': Ordertimes,
 }
 
 
-
-
 # Get data 
 ct_fetch = database.session.query(Centertable).all()
 pr_fetch = database.session.query(Producttable).all()

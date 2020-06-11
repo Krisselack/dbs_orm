@@ -45,7 +45,11 @@ pr_fetch = database.session.query(Producttable).all()
 cu_fetch = database.session.query(Customertable).all()
 ot_fetch = database.session.query(Ordertimes).all()
 
-# Auslesen der einzelnen Daten (-> Pandas-Analyse) 
+from sqlalchemy import inspect
+a = inspect(cu_fetch[0]) 
+attr_names = [c_attr.key for c_attr in a.mapper.column_attrs]
+
+# Auslesen der einzelnen Daten 
 ct_fetch[0].sales
 pr_fetch[0].productline
 
@@ -63,9 +67,7 @@ for x in cu_fetch:
         country_types.append(x.country)
 country_types
 
-
-
-# Beispiel von hier:  https://pythonspot.com/tk-dropdown-example/
+# Dropdown-Beispiel von hier:  https://pythonspot.com/tk-dropdown-example/
 # Erweiterung von hier: https://stackoverflow.com/questions/55750244/how-to-add-a-sequential-dropdown-menu-in-a-single-tkinter-window
 
 root = Tk()
@@ -81,37 +83,52 @@ mainframe.pack(pady = 100, padx = 200)
 # Create a Tkinter variable
 tkvar = StringVar(root)
 tkvar2 = StringVar(root)
+tkvar3 = StringVar(root)
 
 # Dictionary with options
 choices = country_types
 choice2 = prod_types
+choice3 = attr_names
 
 tkvar.set('USA') # set the default option
 tkvar2.set('Motorcycles') # set the default option
+tkvar3.set('customername') # set the default option
 
-popupMenu = OptionMenu(mainframe, tkvar, *choices)
-Label(mainframe, text="Choose a country and product type for sum of Sale").grid(row = 1, column = 1)
-popupMenu.grid(row = 2, column =1)
+Label(mainframe, text="Choose a country and product type for sum of Sale \n (und unten die Ausgabe der Customertable (Konsolenprint)").grid(row = 1, column = 1)
+
+popupMenu = tk.OptionMenu(mainframe, tkvar, *choices)
+popupMenu.grid(row=2, column=1)
 
 popupMenu2 = tk.OptionMenu(mainframe, tkvar2, *choice2)
 popupMenu2.grid(row=3, column=1)  # ADDED
 
-#textbox = tk.Label(mainframe, text="Test")
-#textbox.pack()
+popupMenu3 = tk.OptionMenu(mainframe, tkvar3, *choice3)
+popupMenu3.grid(row=4, column=1)  # ADDED
 
 # on change dropdown value
 def change_dropdown(*args):
     # print( tkvar.get() )
 
+    # ORM-Abfrage
     mc_sales = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == tkvar.get(), Producttable.productline == tkvar2.get()).all()
 
+    col_name = tkvar3.get()
+    print(col_name) 
+
+    customerquery = database.session.query(getattr(Customertable,"{}".format(col_name))).all()
+    print(customerquery)
+    # for i in customerquery: 
+    #     print(i) # - Man kann hier einzelne Spalten abrufen 
+
+    # für Summe Sales 
     mcsalessum = []
     for x in mc_sales:
         mcsalessum.append(x.sales)
-
+    
+    # Ausgabe 
     res = tk.StringVar(root, "Land: " + tkvar.get() + " Produkt: " + tkvar2.get() + " Summe: " + str(int(sum(mcsalessum))))  
         
-    print(sum(mcsalessum))
+#     print(sum(mcsalessum))
 
     speak = tk.Message(root,
             textvariable = res,
@@ -125,6 +142,7 @@ def change_dropdown(*args):
 # link function to change dropdown
 tkvar.trace('w', change_dropdown)
 tkvar2.trace('w', change_dropdown)
+tkvar3.trace('w', change_dropdown)
 
 # v = change_dropdown()
 # # Label(root, textvariable=v).pack()

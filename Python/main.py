@@ -97,6 +97,7 @@ while(True):
     if userinput =='u':
         customer = database.session.query(Customertable).get('CU1')
         print('cu_id: ' + customer.cu_id + '| customername: ' + customer.customername)
+        ui.printconsole('Hier ein statisches Beispiel für ein Update: Customer mit Key CU1')
         ui.printconsole('customername char50')
         newname = ui.getinput()
         customer.customername = newname

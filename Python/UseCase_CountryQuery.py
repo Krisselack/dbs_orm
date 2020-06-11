@@ -103,11 +103,7 @@ popupMenu2.grid(row=3, column=1)  # ADDED
 def change_dropdown(*args):
     # print( tkvar.get() )
 
-    mc_sales = database.session.query(Centertable) \
-    .join(Customertable) \
-    .join(Producttable) \ 
-    .filter(Customertable.country == tkvar.get(), Producttable.productline == tkvar2.get()) \
-    .all()
+    mc_sales = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == tkvar.get(), Producttable.productline == tkvar2.get()).all()
 
     mcsalessum = []
     for x in mc_sales:

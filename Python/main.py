@@ -34,19 +34,15 @@ dic={'Ordertimes': Ordertimes,
 
 # Verwenden der API zur Daten Abfrage:
 # FILTER KANN MAN AUF Variable setzen
-"""
-mc_sales_in_USA = database.session.query(Centertable) \
-    .join(Customertable) \
-    .join(Producttable) \ 
-    .filter(Customertable.country == 'USA', Producttable.productline == 'Motorcycles') \
-    .all()
+
+mc_sales_in_USA = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == 'USA', Producttable.productline == 'Motorcycles').all()
 
 ussales = []
 for x in mc_sales_in_USA:
     ussales.append(x.sales)
 
 sum(ussales)
-"""
+
 
 # Ablauf für UseCase
 while(True):

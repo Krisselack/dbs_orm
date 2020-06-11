@@ -108,10 +108,9 @@ def change_dropdown(*args):
 
 <<<<<<< HEAD
     # ORM-Abfrage
-=======
+
     
-    # ORM-Abfrage - Summe Sales 
->>>>>>> b9b7c42bf6df819c39c56fed39966994d062d9ec
+    # ORM-Abfrage - Summe Sales
     mc_sales = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == tkvar.get(), Producttable.productline == tkvar2.get()).all()
 
     col_name = tkvar3.get()

@@ -106,10 +106,6 @@ popupMenu3.grid(row=4, column=1)  # ADDED
 # on change dropdown value
 def change_dropdown(*args):
 
-<<<<<<< HEAD
-    # ORM-Abfrage
-
-    
     # ORM-Abfrage - Summe Sales
     mc_sales = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == tkvar.get(), Producttable.productline == tkvar2.get()).all()
 

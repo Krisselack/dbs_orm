@@ -5,7 +5,6 @@
 # Copyright (C) 2020
 # Description:
 
-
 # System-Setup 
 import os
 from sys import platform
@@ -20,7 +19,7 @@ import userinterface as ui
 from salesdb_declaration import Ordertimes, Centertable, Customertable, Producttable
 from tkinter import *
 import tkinter as tk
-# from tk import *
+from sqlalchemy import inspect
 
 # unterschiedliche Passwörter 
 if platform == "linux": 
@@ -28,7 +27,6 @@ if platform == "linux":
 else:
     database = db('postgres','Test','localhost',5432,'postgres')
 
-   
 database.dbtest()
 
     # Tabellen 
@@ -38,16 +36,12 @@ dic={'Ordertimes': Ordertimes,
     'Producttable':Producttable
 }
 
-
 # Get data 
 ct_fetch = database.session.query(Centertable).all()
 pr_fetch = database.session.query(Producttable).all()
 cu_fetch = database.session.query(Customertable).all()
 ot_fetch = database.session.query(Ordertimes).all()
 
-from sqlalchemy import inspect
-a = inspect(cu_fetch[0]) 
-attr_names = [c_attr.key for c_attr in a.mapper.column_attrs]
 
 # Auslesen der einzelnen Daten 
 ct_fetch[0].sales
@@ -66,6 +60,10 @@ for x in cu_fetch:
     if x.country not in country_types:
         country_types.append(x.country)
 country_types
+
+# Auslesen der Customer-Spalten 
+a = inspect(cu_fetch[0]) 
+attr_names = [c_attr.key for c_attr in a.mapper.column_attrs]
 
 # Dropdown-Beispiel von hier:  https://pythonspot.com/tk-dropdown-example/
 # Erweiterung von hier: https://stackoverflow.com/questions/55750244/how-to-add-a-sequential-dropdown-menu-in-a-single-tkinter-window
@@ -92,9 +90,9 @@ choice3 = attr_names
 
 tkvar.set('USA') # set the default option
 tkvar2.set('Motorcycles') # set the default option
-tkvar3.set('customername') # set the default option
+tkvar3.set('country') # set the default option
 
-Label(mainframe, text="Choose a country and product type for sum of Sale \n (und unten die Ausgabe der Customertable (Konsolenprint)").grid(row = 1, column = 1)
+Label(mainframe, text="Choose a country and product type for sum of Sale \n (und unten die Ausgabe der Customertable nach Country (Konsolenprint))").grid(row = 1, column = 1)
 
 popupMenu = tk.OptionMenu(mainframe, tkvar, *choices)
 popupMenu.grid(row=2, column=1)
@@ -107,18 +105,21 @@ popupMenu3.grid(row=4, column=1)  # ADDED
 
 # on change dropdown value
 def change_dropdown(*args):
-    # print( tkvar.get() )
 
+<<<<<<< HEAD
     # ORM-Abfrage
+=======
+    
+    # ORM-Abfrage - Summe Sales 
+>>>>>>> b9b7c42bf6df819c39c56fed39966994d062d9ec
     mc_sales = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == tkvar.get(), Producttable.productline == tkvar2.get()).all()
 
     col_name = tkvar3.get()
     print(col_name) 
 
-    customerquery = database.session.query(getattr(Customertable,"{}".format(col_name))).all()
+    # ORM-Abfrage - Spalte Customertable nach Land 
+    customerquery = database.session.query(getattr(Customertable,"{}".format(col_name))).filter(Customertable.country == tkvar.get()).all()
     print(customerquery)
-    # for i in customerquery: 
-    #     print(i) # - Man kann hier einzelne Spalten abrufen 
 
     # für Summe Sales 
     mcsalessum = []
@@ -128,28 +129,14 @@ def change_dropdown(*args):
     # Ausgabe 
     res = tk.StringVar(root, "Land: " + tkvar.get() + " Produkt: " + tkvar2.get() + " Summe: " + str(int(sum(mcsalessum))))  
         
-#     print(sum(mcsalessum))
-
     speak = tk.Message(root,
             textvariable = res,
             width=500)
-   # res.set(res)
     speak.pack()
-
-#    return(sum(mcsalessum))
-
 
 # link function to change dropdown
 tkvar.trace('w', change_dropdown)
 tkvar2.trace('w', change_dropdown)
 tkvar3.trace('w', change_dropdown)
 
-# v = change_dropdown()
-# # Label(root, textvariable=v).pack()
-
-# msg = Message(root, text=v)
-# msg.pack()
-
 root.mainloop()
-
- 

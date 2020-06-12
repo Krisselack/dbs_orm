@@ -34,7 +34,7 @@ dic={'Ordertimes': Ordertimes,
 
 # Verwenden der API zur Daten Abfrage:
 # FILTER KANN MAN AUF Variable setzen
-
+""""
 mc_sales_in_USA = database.session.query(Centertable).join(Customertable).join(Producttable).filter(Customertable.country == 'USA', Producttable.productline == 'Motorcycles').all()
 
 ussales = []
@@ -42,7 +42,7 @@ for x in mc_sales_in_USA:
     ussales.append(x.sales)
 
 sum(ussales)
-
+"""
 
 # Ablauf für UseCase
 while(True):
@@ -97,11 +97,12 @@ while(True):
     if userinput =='u':
         customer = database.session.query(Customertable).get('CU1')
         print('cu_id: ' + customer.cu_id + '| customername: ' + customer.customername)
-        ui.printconsole('Hier ein statisches Beispiel für ein Update: Customer mit Key CU1')
+        ui.printconsole('Hier ein statisches Beispiel für ein Update: Customer mit Key '+customer.cu_id)
         ui.printconsole('customername char50')
         newname = ui.getinput()
         customer.customername = newname
         database.session.commit()
+        customer.customername = 'Wir nie irgendwo auftauchen'
         database.session.refresh(customer)
         #customer = database.session.query(Customertable).get('CU1')
         print('cu_id: ' + customer.cu_id + '| customername: ' + customer.customername)
